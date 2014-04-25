@@ -1,0 +1,2 @@
+require 'faker_japanese'
+
