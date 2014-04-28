@@ -1,6 +1,7 @@
 require 'faker_japanese'
 
 class String
+  # Method to check if string contains cjk characters
   def contains_cjk?
     !!(self =~ /\p{Han}|\p{Katakana}|\p{Hiragana}|\p{Hangul}/)
   end
