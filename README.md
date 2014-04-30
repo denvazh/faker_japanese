@@ -1,8 +1,8 @@
 # faker_japanese
 
 Faker extension to generate Japanese names.
-Provides fake first and last name in kanji,hiragana, katakana
-and romaji(name written with latin alphabet).
+Provides fake first and last names in kanji, hiragana, katakana and romaji (name written with latin alphabet).
+It has now around 1500 last names and around 260 first names for both genders.
 
 ## Installation
 
@@ -77,8 +77,8 @@ fn.romaji
 
 ## When is it useful?
 
-Currently, using only methods and localization provide by Faker
-it is not possible to reuse they values to generate other `fake` data.
+Currently, using default methods provided by Faker it is not possible to reuse localized names and 
+generate from them other `fake` data.
 
 For example
 
@@ -92,8 +92,7 @@ p ml
 =>"@.name"
 ```
 
-On the other hand, using `faker_japanese` it is possible to pass
-name in romaji to generate valid value:
+On the other hand, with `faker_japanese` it is possible to pass name in romaji to generate valid value:
 
 ```
 nickname = Faker::Name.name.romaji.split.join.downcase
@@ -112,10 +111,11 @@ freeemail = Faker::Internet.free_email(nickname)
 
 ## Acknowledgements
 
-Idea for this work was heavily inspired by the following projects:
+This small piece of code was heavily inspired by the following projects:
 - [Faker main project](https://github.com/stympy/faker)
 - [faker-ja by xiaotuanzi](https://github.com/xiaotuanzi/faker-ja)
 - [ruby-faker-japanese by tily](https://github.com/tily/ruby-faker-japanese)
+- for bulk conversion of kanji names I used [natto gem](https://bitbucket.org/buruzaemon/natto/src)
 
 ## License
 
