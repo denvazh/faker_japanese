@@ -9,7 +9,10 @@ rvm:
 
 cache: bundler
 
-script: 'bundle exec rake test'
+before_install:
+  - gem install bundler -v '1.8.6'
+
+script: bundle exec rake test
 
 matrix:
   allow_failures:
