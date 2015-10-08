@@ -4,7 +4,7 @@ require 'rubocop/rake_task'
 require 'yard'
 
 RSpec::Core::RakeTask.new
-task :test => :spec
+task test: :spec
 
 # Testing with rspec
 RSpec::Core::RakeTask.new(:spec) do |task|
@@ -18,7 +18,6 @@ RuboCop::RakeTask.new(:rubocop) do |task|
   # don't abort rake on failure
   task.fail_on_error = false
 end
-
 
 # Documentation
 desc "Generate gem documentation (same as running 'rake yard')"
