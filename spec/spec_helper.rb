@@ -1,7 +1,5 @@
 require 'faker_japanese'
 
-require 'pry'
-
 class String
   # Method to check if string contains cjk characters
   def contains_cjk?
@@ -19,3 +17,6 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+# For debugging
+require 'pry'

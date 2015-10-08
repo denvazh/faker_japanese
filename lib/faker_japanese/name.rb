@@ -3,17 +3,20 @@ module Faker
     class Name < Base
       class << self
 
-        # Return fake first name
+        # Fake first name
+        # @return [Kanji]
         def first_name
           fetch(:first_name)
         end
 
-        # Return fake last name
+        # Fake last name
+        # @return [Kanji]
         def last_name
           fetch(:last_name)
         end
 
-        # Return fake name, which is a string combining last and first name
+        # Fake full name
+        # @return [Kanji] string combining last and first name
         def name
           first_name =fetch(:first_name)
           last_name =fetch(:last_name)
