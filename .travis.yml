@@ -1,0 +1,17 @@
+language: ruby
+
+sudo: false
+
+rvm:
+  - 1.9.3
+  - 2.2.1
+  - ruby-head
+
+cache: bundler
+
+script: 'bundle exec rake test'
+
+matrix:
+  allow_failures:
+    - rvm: ruby-head
+  fast_finish: true
