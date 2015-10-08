@@ -1,6 +1,7 @@
 require 'faker'
 require 'yaml'
 
+# Faker
 module Faker
   # Japanese localization for Faker
   module Japanese
