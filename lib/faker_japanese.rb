@@ -1,68 +1,101 @@
 require 'faker'
+require 'yaml'
 
+# Faker
 module Faker
-	module Japanese
-		SELFDIR = File.expand_path(File.dirname(__FILE__))
+  # Japanese localization for Faker
+  module Japanese
+    # Location on the disk of this script
+    SELFDIR = File.expand_path(File.dirname(__FILE__))
 
-		class Kanji < String
-			attr_reader :yomi, :kana, :romaji
+    # Kanji string
+    class Kanji < String
+      attr_reader :yomi, :kana, :romaji
 
-			def initialize(kanji, yomi, kana, romaji)
-				super(kanji)
-				@yomi = yomi
-				@kana = kana
-				@romaji = romaji
-			end
-		end
+      # Create new Kanji string instance
+      # @param [String] kanji string in kanji from
+      # @param [String] yomi string with hiragana readings
+      # @param [String] kana string with katakana readings
+      # @param [String] romaji romanized string
+      def initialize(kanji, yomi, kana, romaji)
+        super(kanji)
+        @yomi = yomi
+        @kana = kana
+        @romaji = romaji
+      end
+    end
 
-		class Base
-			class << self
+    # Faker Base class
+    class Base
+      class << self
+        # Using callback to store loaded data when subclass is created
+        # @param [Class] klass class name
+        def inherited(klass)
+          fail("#{klass} should be Class") unless klass.is_a? Class
+          klass.class_variable_set '@@data', load_data(klass)
+        end
 
-				# Using callback to store loaded data when subclass is created
-				def inherited(klass)
-					klass.class_variable_set "@@data", load_data(klass)
-				end
+        # Convert full class name to lower case string with class name only
+        # @param [Class] klass class name
+        # @return [String]
+        def demodulize(klass)
+          klass.to_s.split('::').last.downcase
+        end
 
-				# Load fake data from yml file
-				def load_data(klass)
-					datafile = File.join(SELFDIR, 'faker_japanese',
-						'data', "#{klass.to_s.split('::').last.downcase}.yml")
-					if datafile && File.readable?(datafile)
-            data = YAML.load_file(datafile).each_with_object({}){|(k,v), h| h[k.to_sym] = v}
-            data.inject({}) do |res, item|
-            	key, values, = item
-            	res.update(key => values.map! { |v| Kanji.new(*v) })
-            end
-					else
-						nil
-					end
-				end
+        # Load yml file with minor pre-processing
+        # @param [String] filepath full path to the file
+        # @return [Hash]
+        def load_raw_yaml(filepath)
+          return nil unless filepath && File.readable?(filepath)
+          YAML.load_file(filepath).each_with_object({}) do |(k, v), h|
+            h[k.to_sym] = v
+          end
+        end
 
-				# Search
-				def fetch(key)
-					val = self.class_variable_get("@@data")[key]
-					ret = val[rand(val.size)]
-				end
+        # Created dictionary with loaded data
+        # @param [Module] klass class name
+        def load_data(klass)
+          datafile = File.join(SELFDIR,
+                               'faker_japanese',
+                               'data', "#{demodulize(klass)}.yml")
+          data = load_raw_yaml(datafile)
+          return data if data.nil?
+          data.inject({}) do |res, item|
+            key, values = item
+            res.update(key => values.map! { |v| Kanji.new(*v) })
+          end
+          data
+        end
 
-				# Swap method if block was evaluated to true
-				def swap_method(klass, name)
-					original_method 	=klass.method(name)
-					new_method				=method(name)
-					klass.singleton_class.send :define_method, name, proc {
-						yield ? new_method.call : original_method.call
-					}
-				end
+        # Fetch random value from name dictionary
+        # @param [String] key in the @@data
+        # @return [Kanji]
+        def fetch(key)
+          val = class_variable_get('@@data')[key]
+          val[rand(val.size)]
+        end
 
-				# Decide which method to use based on value of Faker::Config.locale
-				def use_japanese_method(klass, name)
-					swap_method(klass, name) do
-						Faker::Config.locale == "ja"
-					end
-				end
+        # Swap method if block was evaluated to true
+        # @param [Class] klass name of the class
+        # @param [Symbol] name method name
+        def swap_method(klass, name)
+          original_method = klass.method(name)
+          new_method = method(name)
+          proc = proc { yield ? new_method.call : original_method.call }
+          klass.singleton_class.send(:define_method, name, proc)
+        end
 
-			end # << self
-		end # Base
-	end # Japanese
+        # Decide which method to use based on value of Faker::Config.locale
+        # @param [Class] klass name of the class
+        # @param [Symbol] name method name
+        def use_japanese_method(klass, name)
+          swap_method(klass, name) do
+            Faker::Config.locale == :ja
+          end
+        end
+      end # << self
+    end # Base
+  end # Japanese
 end # Faker
 
 require 'faker_japanese/version'
