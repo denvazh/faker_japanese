@@ -1,5 +1,5 @@
 module Faker
-	module Japanese
-		VERSION = "0.2.0"
-	end
+  module Japanese
+    VERSION = '0.2.1'
+  end
 end

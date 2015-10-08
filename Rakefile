@@ -1,15 +1,23 @@
-require "bundler/gem_tasks"
-require "rspec/core/rake_task"
-require "yard"
+require 'bundler/gem_tasks'
+require 'rspec/core/rake_task'
+require 'yard'
 
 RSpec::Core::RakeTask.new
-task :default => :spec
 task :test => :spec
 
-# Documentation
-YARD::Rake::YardocTask.new do |t|
-	t.files   = ['lib/**/*.rb']   # optional
+# Testing with rspec
+RSpec::Core::RakeTask.new(:spec) do |task|
+  task.rspec_opts = %w(--color --format documentation)
 end
+task test: :spec
 
-# desc "Generate gem documentation (same as running 'rake yard')"
-task :doc => :yard
+# Documentation
+desc "Generate gem documentation (same as running 'rake yard')"
+YARD::Rake::YardocTask.new do |t|
+  t.files = %w(lib/**/*.rb)
+  t.stats_options = %w(--list-undoc --compact)
+end
+task doc: :yard
+
+# Default Rake task
+task default: :spec
