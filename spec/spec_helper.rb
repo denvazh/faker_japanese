@@ -1,3 +1,22 @@
+# Coverage and Coveralls
+require 'simplecov'
+require 'coveralls'
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
+    Coveralls::SimpleCov::Formatter,
+    SimpleCov::Formatter::HTMLFormatter
+]
+SimpleCov.start do
+  # disable coverage tracking
+  add_filter 'spec' # rspec tests
+end
+
+# Use Coveralls formatter only in CI environment
+if ENV['CI'].eql?('true') || ENV['TRAVIS'].eql?('true') || ENV['COVERALLS_REPO_TOKEN']
+  Coveralls.wear!
+end
+
+$LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'faker_japanese'
 
 class String
