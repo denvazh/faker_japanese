@@ -10,7 +10,12 @@ module Faker
 
     # Kanji string
     class Kanji < String
-      attr_reader :yomi, :kana, :romaji
+      # @return [String] hiragana form
+      attr_reader :yomi
+      # @return [String] katakana form
+      attr_reader :kana
+      # @return [String] romanized form
+      attr_reader :romaji
 
       # Create new Kanji string instance
       # @param [String] kanji string in kanji from
