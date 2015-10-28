@@ -30,10 +30,10 @@ To enable faker_japanese manually use
 require 'faker/japanese'
 ```
 
-Before using, set locale to `ja`
+Before using, set locale to `:ja`
 
 ```
-Faker::Config.locale = "ja"
+Faker::Config.locale = :ja
 ```
 
 Then use `Faker::Name` as you would normally do
