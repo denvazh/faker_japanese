@@ -3,8 +3,8 @@ require 'simplecov'
 require 'coveralls'
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    Coveralls::SimpleCov::Formatter,
-    SimpleCov::Formatter::HTMLFormatter
+  Coveralls::SimpleCov::Formatter,
+  SimpleCov::Formatter::HTMLFormatter
 ]
 SimpleCov.start do
   # disable coverage tracking
@@ -22,7 +22,7 @@ require 'faker_japanese'
 class String
   # Method to check if string contains cjk characters
   def contains_cjk?
-    !!(self =~ /\p{Han}|\p{Katakana}|\p{Hiragana}|\p{Hangul}/)
+    (self =~ /\p{Han}|\p{Katakana}|\p{Hiragana}|\p{Hangul}/)
   end
 end
 

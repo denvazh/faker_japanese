@@ -8,7 +8,7 @@ task test: :spec
 
 # Testing with rspec
 RSpec::Core::RakeTask.new(:spec) do |task|
-  task.rspec_opts = %w(--color --format documentation)
+  task.rspec_opts = %w[--color --format documentation]
 end
 task test: :spec
 
@@ -22,8 +22,8 @@ end
 # Documentation
 desc "Generate gem documentation (same as running 'rake yard')"
 YARD::Rake::YardocTask.new do |t|
-  t.files = %w(lib/**/*.rb)
-  t.stats_options = %w(--list-undoc --compact)
+  t.files = %w[lib/**/*.rb]
+  t.stats_options = %w[--list-undoc --compact]
 end
 task doc: :yard
 

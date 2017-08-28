@@ -1,12 +1,13 @@
 require 'faker'
 require 'yaml'
+require 'pathname'
 
 # Faker
 module Faker
   # Japanese localization for Faker
   module Japanese
-    # Location on the disk of this script
-    SELFDIR = File.expand_path(File.dirname(__FILE__))
+    # Working directory where this script is located
+    WORKDIR = Pathname.new(::File.expand_path(::File.dirname(__FILE__)))
 
     # Kanji string
     class Kanji < String
@@ -33,14 +34,14 @@ module Faker
     # Faker Base class
     class Base
       class << self
-        # Using callback to store loaded data when subclass is created
+        # Use callback to store loaded data when subclass is created
         # @param [Class] klass class name
         def inherited(klass)
           fail("#{klass} should be Class") unless klass.is_a? Class
           klass.class_variable_set '@@data', load_data(klass)
         end
 
-        # Convert full class name to lower case string with class name only
+        # Convert full class name to the lower case string with class name only
         # @param [Class] klass class name
         # @return [String]
         def demodulize(klass)
@@ -51,7 +52,7 @@ module Faker
         # @param [String] filepath full path to the file
         # @return [Hash]
         def load_raw_yaml(filepath)
-          return nil unless filepath && File.readable?(filepath)
+          return nil unless filepath && ::File.readable?(filepath)
           YAML.load_file(filepath).each_with_object({}) do |(k, v), h|
             h[k.to_sym] = v
           end
@@ -60,10 +61,8 @@ module Faker
         # Created dictionary with loaded data
         # @param [Module] klass class name
         def load_data(klass)
-          datafile = File.join(SELFDIR,
-                               'faker_japanese',
-                               'data', "#{demodulize(klass)}.yml")
-          data = load_raw_yaml(datafile)
+          datafile = "#{demodulize(klass)}.yml"
+          data = load_raw_yaml(WORKDIR.join('faker_japanese', 'data', datafile))
           return data if data.nil?
           data.inject({}) do |res, item|
             key, values = item
@@ -72,7 +71,7 @@ module Faker
           data
         end
 
-        # Fetch random value from name dictionary
+        # Fetch random value from the name dictionary
         # @param [String] key in the @@data
         # @return [Kanji]
         def fetch(key)
@@ -80,7 +79,7 @@ module Faker
           val[rand(val.size)]
         end
 
-        # Swap method if block was evaluated to true
+        # Swap methods if block was evaluated to true
         # @param [Class] klass name of the class
         # @param [Symbol] name method name
         def swap_method(klass, name)
@@ -94,9 +93,7 @@ module Faker
         # @param [Class] klass name of the class
         # @param [Symbol] name method name
         def use_japanese_method(klass, name)
-          swap_method(klass, name) do
-            Faker::Config.locale == :ja
-          end
+          swap_method(klass, name) { Faker::Config.locale == :ja }
         end
       end # << self
     end # Base
