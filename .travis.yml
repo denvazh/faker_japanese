@@ -1,22 +1,21 @@
-language: ruby
-
 sudo: false
-
-rvm:
-  - 2.1.10
-  - 2.2.4
-  - 2.3.4
-  - 2.4.1
-  - ruby-head
-
+language: ruby
 cache: bundler
-
-before_install:
-  - gem install bundler -v '1.8.6'
-
+rvm:
+- 2.1
+- 2.2
+- 2.3
+- 2.4
 script: bundle exec rake test
-
-matrix:
-  allow_failures:
-    - rvm: ruby-head
-  fast_finish: true
+notifications:
+  email: false
+jobs:
+  include:
+    - stage: gem release
+      rvm: 2.4
+      deploy:
+        provider: rubygems
+        api_key:
+          secure: R3sjLrZLS0xl8nkJWWc/5lt7HLxmw7Y/dpyXh70KkodnB62rPqMKurx19EOUl8EB3wbpAgr/mBfO5gw6rOmrS1+AshZgjHeDAFnyHgD0SLAzEM6cccg8cnQsGhnOgCXH//YOhklkkyjZLvLuxmObmlW4+n2tFOI++/1HP+YpUCw=
+        on:
+          tags: true
