@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'faker_japanese/version'
@@ -11,7 +12,6 @@ Gem::Specification.new do |spec|
   spec.description = 'Faker extension providing japanese names'
   spec.summary = 'Faker extension for japanese names'
   spec.license = 'MIT'
-
   spec.bindir = 'exe'
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
@@ -32,6 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'fuubar'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rubocop'
-
   spec.add_runtime_dependency 'faker'
 end

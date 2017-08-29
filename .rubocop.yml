@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - spec/**/*
     - exe/*
+    - vendor/bundle/**/*
 
 #inherit_from: .rubocop_todo.yml
 

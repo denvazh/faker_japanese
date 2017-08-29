@@ -37,7 +37,7 @@ module Faker
         # Use callback to store loaded data when subclass is created
         # @param [Class] klass class name
         def inherited(klass)
-          fail("#{klass} should be Class") unless klass.is_a? Class
+          raise("#{klass} should be Class") unless klass.is_a?(Class)
           klass.class_variable_set '@@data', load_data(klass)
         end
 

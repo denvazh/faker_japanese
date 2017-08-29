@@ -2,14 +2,8 @@ require 'spec_helper'
 
 describe Faker::Japanese do
   context 'when locale is NOT set to :ja' do
-
-    before(:all) {
-      Faker::Config.locale = :en
-    }
-
-    after(:all) {
-      Faker::Config.locale = :en
-    }
+    before(:all) { Faker::Config.locale = :en }
+    after(:all) { Faker::Config.locale = :en }
 
     it 'uses default locale' do
       expect(Faker::Config.locale).to eq(:en)
@@ -44,14 +38,8 @@ describe Faker::Japanese do
   end
 
   context 'when locale is set to ja' do
-
-    before(:all) {
-      Faker::Config.locale = :ja
-    }
-
-    after(:all) {
-      Faker::Config.locale = :en
-    }
+    before(:all) { Faker::Config.locale = :ja }
+    after(:all) { Faker::Config.locale = :en }
 
     it 'uses japanese locale :ja' do
       expect(Faker::Config.locale).to eq(:ja)
@@ -64,9 +52,7 @@ describe Faker::Japanese do
         expect(name).not_to be_nil
         expect(name.ascii_only?).to be_falsey
         expect(name.contains_cjk?).to be_truthy
-        [:yomi, :kana, :romaji].each do |method|
-          expect(name.respond_to?(method)).to be_truthy
-        end
+        %i[yomi kana romaji].each { |method| expect(name.respond_to?(method)).to be_truthy }
         expect(name.yomi.contains_cjk?).to be_truthy
         expect(name.kana.contains_cjk?).to be_truthy
         expect(name.romaji.contains_cjk?).to be_falsey
@@ -85,7 +71,6 @@ describe Faker::Japanese do
         expect(last_name.ascii_only?).to be_falsey
         expect(last_name.contains_cjk?).to be_truthy
       end
-
     end
   end
 end
