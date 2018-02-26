@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'awesome_print', '~> 1.6.1'
   spec.add_development_dependency 'looksee', '~> 4.0.0'
   spec.add_development_dependency 'pry', '~> 0.10.1'
-  spec.add_development_dependency 'yard', '~> 0.8.7.6'
+  spec.add_development_dependency 'yard', '~> 0.9.12'
   spec.add_development_dependency 'fuubar'
   spec.add_development_dependency 'coveralls'
   spec.add_development_dependency 'rubocop'
