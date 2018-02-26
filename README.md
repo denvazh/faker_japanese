@@ -2,7 +2,9 @@
 
 [![Build Status](https://travis-ci.org/denvazh/faker_japanese.svg?branch=master)](https://travis-ci.org/denvazh/faker_japanese)
 [![Coverage Status](https://coveralls.io/repos/denvazh/faker_japanese/badge.svg?branch=master&service=github)](https://coveralls.io/github/denvazh/faker_japanese?branch=master)
+[![Gem](https://img.shields.io/gem/v/faker_japanese.svg)](https://rubygems.org/gems/faker_japanese)
 [![Inline docs](http://inch-ci.org/github/denvazh/faker_japanese.svg?branch=master)](http://inch-ci.org/github/denvazh/faker_japanese)
+
 
 Faker extension to generate Japanese names.
 Provides fake first and last names in kanji, hiragana, katakana and romaji (name written with latin alphabet).
