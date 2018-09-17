@@ -2,10 +2,11 @@
 require 'simplecov'
 require 'coveralls'
 
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-  Coveralls::SimpleCov::Formatter,
-  SimpleCov::Formatter::HTMLFormatter
-]
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    Coveralls::SimpleCov::Formatter,
+    SimpleCov::Formatter::HTMLFormatter
+  ])
 SimpleCov.start do
   # disable coverage tracking
   add_filter 'spec' # rspec tests

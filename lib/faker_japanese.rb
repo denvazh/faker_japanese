@@ -10,7 +10,7 @@ module Faker
     WORKDIR = Pathname.new(::File.expand_path(::File.dirname(__FILE__)))
 
     # Kanji string
-    class Kanji < String
+    class Kanji < ::String
       # @return [String] hiragana form
       attr_reader :yomi
       # @return [String] katakana form
